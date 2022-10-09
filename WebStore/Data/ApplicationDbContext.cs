@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebStore.Models;
 
 namespace WebStore.Data
 {
@@ -10,6 +11,9 @@ namespace WebStore.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
+
+        public DbSet<Category> Category { get; set; }
     }
 }

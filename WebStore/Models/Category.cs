@@ -12,8 +12,5 @@ namespace WebStore.Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int DisplayOrder { get; set; }
-
-
-
     }
 }
