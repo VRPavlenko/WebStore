@@ -19,5 +19,13 @@ namespace WebStore.Controllers
             IEnumerable<Category> objList = _db.Category;
             return View(objList);
         }
+
+        /// <summary>
+        /// this method is needed for the create operation
+        /// </summary>
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
