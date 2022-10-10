@@ -21,11 +21,24 @@ namespace WebStore.Controllers
         }
 
         /// <summary>
-        /// this method is needed for the create operation
+        /// get - create
         /// </summary>
         public IActionResult Create()
         {
             return View();
+        }
+
+        /// <summary>
+        /// set - create
+        /// </summary>
+        [HttpPost]
+        //input security check
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category obj)
+        {
+            _db.Category.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
