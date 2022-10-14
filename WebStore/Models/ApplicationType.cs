@@ -6,6 +6,7 @@ namespace WebStore.Models
     {
         [Key]
         public int TypeId { get; set; }
+        [Required]
         public string TypeName { get; set; }
     }
 }
