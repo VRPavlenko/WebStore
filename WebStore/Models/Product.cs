@@ -13,7 +13,7 @@ namespace WebStore.Models
         public string Description { get; set; }
         [Range(0, int.MaxValue)]
         public double Price { get; set; }
-        public string OmageUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         [Display(Name="Category Type")]
         public int CategoryId { get; set; }
