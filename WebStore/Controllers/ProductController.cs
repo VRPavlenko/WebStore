@@ -26,55 +26,38 @@ namespace WebStore.Controllers
         }
 
         /// <summary>
-        /// get - create
+        /// update or create (get - upsert)
         /// </summary>
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            Product product = new Product();
+            if(id == null)
+            {
+                //for create
+                return View(product);
+            }
+            else
+            {
+                //for update
+                product = _db.Product.Find(id);
+                if(product == null)
+                {
+                    return NotFound();
+                }
+                return View(product);
+            }
         }
 
         /// <summary>
-        /// set - create
+        /// post - upsert
         /// </summary>
         [HttpPost]
-        //input security check
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category obj)
+        public IActionResult Upsert(Category obj)
         {
             if(ModelState.IsValid) 
             {
                 _db.Category.Add(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
-
-        /// <summary>
-        /// get - edit
-        /// </summary>
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-                return NotFound();
-
-            var obj = _db.Category.Find(id);
-            if (obj == null)
-                return NotFound();
-
-            return View(obj);
-        }
-
-        /// <summary>
-        /// post - edit
-        /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Category.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
