@@ -1,5 +1,5 @@
 # Online hardware-store
-Simple online store with. 
+Simple online store. 
 
 ## Usage
 * Core technologies: C#.Net Core, ASP.NET Core, SQL (with Entity Framework Core).
@@ -11,6 +11,6 @@ Simple online store with.
 
 ## Goals
 - [ ] Create store view
-- [ ] Create store business logic
+- [ ] Create store business logic: add/edit/delete product, 
 - [ ] Create admin user
 - [ ] Create customer user
