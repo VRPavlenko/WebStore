@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Data;
 using WebStore.Models;
+using WebStore.Models.ViewModels;
 
 namespace WebStore.Controllers
 {
@@ -31,30 +32,43 @@ namespace WebStore.Controllers
         /// </summary>
         public IActionResult Upsert(int? id)
         {
-            IEnumerable<SelectListItem> CategoryDropeDown = _db.Category
-                .Select(i => new SelectListItem {
+            ProductVM productVM = new ProductVM()
+            {
+                Product = new Product(),
+                CategorySelectList = _db.Category.Select(i => new SelectListItem
+                {
                     Text = i.CategoryName,
                     Value = i.CategoryId.ToString()
-                });
+                })
+            };
 
-            //get data to view
-            ViewBag.CategoryDropeDown = CategoryDropeDown;
+            //this code use ViewBag -> it`s not ok
+            //IEnumerable<SelectListItem> CategoryDropeDown = _db.Category
+            //    .Select(i => new SelectListItem
+            //    {
+            //        Text = i.CategoryName,
+            //        Value = i.CategoryId.ToString()
+            //    });
 
-            Product product = new Product();
+            ////get data to view
+            //ViewBag.CategoryDropeDown = CategoryDropeDown;
+
+            //Product product = new Product();
+
             if(id == null)
             {
                 //for create
-                return View(product);
+                return View(productVM);
             }
             else
             {
                 //for update
-                product = _db.Product.Find(id);
-                if(product == null)
+                productVM.Product = _db.Product.Find(id);
+                if(productVM.Product == null)
                 {
                     return NotFound();
                 }
-                return View(product);
+                return View(productVM);
             }
         }
 
