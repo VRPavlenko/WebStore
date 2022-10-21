@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/fontawesome/css/all.css" />
+    @*to text redactor*@
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -50,6 +52,10 @@
 
     @*to sweet alerts*@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @*to text redactor*@
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
