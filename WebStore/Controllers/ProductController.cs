@@ -9,6 +9,7 @@ using WebStore.Data;
 using WebStore.Models;
 using WebStore.Models.ViewModels;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Controllers
 {
@@ -87,7 +88,7 @@ namespace WebStore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductVM productVM)
         {
-            if(ModelState.IsValid) 
+            if(ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -95,6 +96,7 @@ namespace WebStore.Controllers
                 if(productVM.Product.Id == 0)
                 {
                     //Creating new Product
+
                     //upload -- path to image
                     string upload = webRootPath + WC.ImagePath;
                     string fileName = Guid.NewGuid().ToString();
@@ -112,7 +114,41 @@ namespace WebStore.Controllers
                 }
                 else
                 {
-                    //Updating
+                    //Updating old Product
+
+                    //problem: if dont use AsNoTracking() -> get error:
+                    //The instance of entity type 'Product' cannot be tracked because another instance
+                    //with the same key value for {'Id'} is already being tracked
+                    var objFromDb = _db.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
+
+                    if(files.Count > 0)
+                    {
+                        string upload = webRootPath + WC.ImagePath;
+                        string fileName = Guid.NewGuid().ToString();
+                        string extension = Path.GetExtension(files[0].FileName);
+
+                        var oldFile = Path.Combine(upload, objFromDb.ImageUrl);
+
+                        //delete old foto
+                        if(System.IO.File.Exists(oldFile))
+                        {
+                            System.IO.File.Delete(oldFile);
+                        }
+
+                        using (var fileStram = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStram);
+                        }
+
+                        productVM.Product.ImageUrl = fileName + extension;
+                    }
+                    else
+                    {
+                        productVM.Product.ImageUrl = objFromDb.ImageUrl;
+                    }
+
+                    _db.Product.Update(productVM.Product);
+
                 }
 
                 _db.SaveChanges();
