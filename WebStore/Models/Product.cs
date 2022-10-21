@@ -22,8 +22,8 @@ namespace WebStore.Models
 
 
         [Display(Name = "Application Type")]
-        public int ApplicationId { get; set; }
-        [ForeignKey("ApplicationId")]
+        public int ApplicationTypeId { get; set; }
+        [ForeignKey("ApplicationTypeId")]
         public ApplicationType ApplicationType { get; set; }
     }
 }

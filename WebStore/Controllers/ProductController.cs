@@ -27,12 +27,13 @@ namespace WebStore.Controllers
         
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _db.Product;
-            //get Category
-            foreach(var obj in objList)
-            {
-                obj.Category = _db.Category.FirstOrDefault(u => u.CategoryId == obj.CategoryId);
-            }
+            IEnumerable<Product> objList = _db.Product.Include(unit => unit.Category).Include(unit => unit.ApplicationType);
+
+            //foreach(var obj in objList)
+            //{
+            //    obj.Category = _db.Category.FirstOrDefault(u => u.CategoryId == obj.CategoryId);
+            //    obj.ApplicationType = _db.ApplicationType.FirstOrDefault(u => u.TypeId == obj.ApplicationTypeId);
+            //}
             return View(objList);
         }
 
@@ -48,6 +49,12 @@ namespace WebStore.Controllers
                 {
                     Text = i.CategoryName,
                     Value = i.CategoryId.ToString()
+                }),
+
+                ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+                {
+                    Text = i.TypeName,
+                    Value = i.TypeId.ToString()
                 })
             };
 
@@ -155,11 +162,20 @@ namespace WebStore.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            //upload CategorySelectList
             productVM.CategorySelectList = _db.Category.Select(i => new SelectListItem
             {
                 Text = i.CategoryName,
                 Value = i.CategoryId.ToString()
             });
+
+            productVM.ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+            {
+                Text = i.TypeName,
+                Value = i.TypeId.ToString()
+            });
+
             return View(productVM);
         }
 
@@ -171,7 +187,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            Product product = _db.Product.Include(u => u.Category).FirstOrDefault(u => u.Id == id);
+            Product product = _db.Product.Include(u => u.Category).Include(u => u.ApplicationType).FirstOrDefault(u => u.Id == id);
             //product.Category = _db.Category.Find(product.CategoryId);
             if (product == null)
                 return NotFound();

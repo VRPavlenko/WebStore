@@ -12,7 +12,7 @@ Simple online store.
 ## Goals
 - [ ] Create store view
 - [X] Create store business logic: add/edit/delete category + type
-- [ ] Create store business logic: add/edit/delete product
+- [X] Create store business logic: add/edit/delete product
 - [ ] Create store business logic: make/review orders
 - [ ] Create admin user
 - [ ] Create customer user

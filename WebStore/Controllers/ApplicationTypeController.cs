@@ -17,7 +17,7 @@ namespace WebStore.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<ApplicationType> objList = _db.applicationType;
+            IEnumerable<ApplicationType> objList = _db.ApplicationType;
             return View(objList);
         }
 
@@ -39,7 +39,7 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.applicationType.Add(obj);
+                _db.ApplicationType.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -51,7 +51,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            var obj = _db.applicationType.Find(id);
+            var obj = _db.ApplicationType.Find(id);
             if (obj == null)
                 return NotFound();
 
@@ -64,7 +64,7 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.applicationType.Update(obj);
+                _db.ApplicationType.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -76,7 +76,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            var obj = _db.applicationType.Find(id);
+            var obj = _db.ApplicationType.Find(id);
             if (obj == null)
                 return NotFound();
 
@@ -92,7 +92,7 @@ namespace WebStore.Controllers
                 return NotFound();
             }
 
-            _db.applicationType.Remove(obj);
+            _db.ApplicationType.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
