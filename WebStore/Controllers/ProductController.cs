@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using WebStore.Data;
 using WebStore.Models;
 using WebStore.Models.ViewModels;
+using System.IO;
 
 namespace WebStore.Controllers
 {
@@ -14,7 +16,13 @@ namespace WebStore.Controllers
     {
         private readonly ApplicationDbContext _db;
 
-        public ProductController(ApplicationDbContext db) => _db = db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public ProductController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        {
+            _db = db;
+            _webHostEnvironment = webHostEnvironment;
+        }
         
         public IActionResult Index()
         {
@@ -77,15 +85,40 @@ namespace WebStore.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Category obj)
+        public IActionResult Upsert(ProductVM productVM)
         {
             if(ModelState.IsValid) 
             {
-                _db.Category.Add(obj);
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                if(productVM.Product.Id == 0)
+                {
+                    //Creating new Product
+                    //upload -- path to image
+                    string upload = webRootPath + WC.ImagePath;
+                    string fileName = Guid.NewGuid().ToString();
+                    string extension = Path.GetExtension(files[0].FileName);
+
+                    //copy new file to path into "upload"
+                    using(var fileStram = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStram);
+                    }
+
+                    productVM.Product.ImageUrl = fileName + extension;
+
+                    _db.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    //Updating
+                }
+
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View();
         }
 
         /// <summary>
