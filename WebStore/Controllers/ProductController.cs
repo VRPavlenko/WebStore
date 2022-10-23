@@ -27,8 +27,9 @@ namespace WebStore.Controllers
         
         public IActionResult Index()
         {
+            //beter getting  Category and ApplicationType. use only one request
             IEnumerable<Product> objList = _db.Product.Include(unit => unit.Category).Include(unit => unit.ApplicationType);
-
+             
             //foreach(var obj in objList)
             //{
             //    obj.Category = _db.Category.FirstOrDefault(u => u.CategoryId == obj.CategoryId);
