@@ -8,6 +8,7 @@ namespace WebStore.Models
         [Key]
         public int Id { get; set; }
         
+
         [Required]
         public string Name { get; set; }
         public string ShortDesc{ get; set; }
@@ -16,15 +17,16 @@ namespace WebStore.Models
         public double Price { get; set; }
         public string ImageUrl { get; set; }
 
+
         [Display(Name="Category Type")]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
 
-        [Display(Name = "Application Type")]
-        public int ApplicationTypeId { get; set; }
-        [ForeignKey("ApplicationTypeId")]
-        public ApplicationType ApplicationType { get; set; }
+        [Display(Name = "Used Type")]
+        public int UsedTypeId { get; set; }
+        [ForeignKey("UsedTypeId")]
+        public UsedType UsedType { get; set; }
     }
 }

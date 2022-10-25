@@ -28,7 +28,7 @@ namespace WebStore.Controllers
         public IActionResult Index()
         {
             //beter getting  Category and ApplicationType. use only one request
-            IEnumerable<Product> objList = _db.Product.Include(unit => unit.Category).Include(unit => unit.ApplicationType);
+            IEnumerable<Product> objList = _db.Product.Include(unit => unit.Category).Include(unit => unit.UsedType);
              
             //foreach(var obj in objList)
             //{
@@ -52,10 +52,10 @@ namespace WebStore.Controllers
                     Value = i.CategoryId.ToString()
                 }),
 
-                ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+                UsedTypeSelectList = _db.UsedType.Select(i => new SelectListItem
                 {
-                    Text = i.TypeName,
-                    Value = i.TypeId.ToString()
+                    Text = i.UsedTypeName,
+                    Value = i.UsedTypeId.ToString()
                 })
             };
 
@@ -171,10 +171,10 @@ namespace WebStore.Controllers
                 Value = i.CategoryId.ToString()
             });
 
-            productVM.ApplicationTypeSelectList = _db.ApplicationType.Select(i => new SelectListItem
+            productVM.UsedTypeSelectList = _db.UsedType.Select(i => new SelectListItem
             {
-                Text = i.TypeName,
-                Value = i.TypeId.ToString()
+                Text = i.UsedTypeName,
+                Value = i.UsedTypeId.ToString()
             });
 
             return View(productVM);
@@ -188,7 +188,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            Product product = _db.Product.Include(u => u.Category).Include(u => u.ApplicationType).FirstOrDefault(u => u.Id == id);
+            Product product = _db.Product.Include(u => u.Category).Include(u => u.UsedType).FirstOrDefault(u => u.Id == id);
             //product.Category = _db.Category.Find(product.CategoryId);
             if (product == null)
                 return NotFound();

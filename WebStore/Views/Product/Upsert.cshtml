@@ -86,15 +86,15 @@
 
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="Product.ApplicationTypeId"></label>
+                        <label asp-for="Product.UsedTypeId"></label>
                     </div>
                     <div class="col-8">
                         @*category list*@
-                        <select asp-for="Product.ApplicationTypeId" asp-items="@Model.ApplicationTypeSelectList" class="form-control">
+                        <select asp-for="Product.UsedTypeId" asp-items="@Model.UsedTypeSelectList" class="form-control">
                             @*disabled to mandatory choice*@
-                            <option disabled selected>-- Select Application Type --</option>
+                            <option disabled selected>-- Select Used Type --</option>
                         </select>
-                        <span asp-validation-for="Product.ApplicationTypeId" class="text-danger"></span>
+                        <span asp-validation-for="Product.UsedTypeId" class="text-danger"></span>
                     </div>
                 </div>
 

@@ -1,29 +1,31 @@
-﻿@model WebStore.Models.ApplicationType
+﻿@model WebStore.Models.UsedType
 
-<form method="post">
-    <input asp-for="TypeId" hidden />
+<form method="post" asp-action="Create">
     <div class="border p-3">
 
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group row">
-            <h2 class="text-info pl-3">Edit Category</h2>
+            <h2 class="text-info pl-3">Add Used Type</h2>
         </div>
 
         <div class="row">
             <div class="col-8">
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="TypeName"></label>
+                        <label asp-for="UsedTypeName"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="TypeName" class="form-control" />
-                        <span asp-validation-for="TypeName" class="text-danger"></span>
+                        <input asp-for="UsedTypeName" class="form-control" />
+                        <span asp-validation-for="UsedTypeName" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                            <input type="submit" class="btn btn-info w-100" value="Create" />
                         </div>
 
                         <div class="col">

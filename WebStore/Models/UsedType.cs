@@ -2,11 +2,11 @@
 
 namespace WebStore.Models
 {
-    public class ApplicationType
+    public class UsedType
     {
         [Key]
-        public int TypeId { get; set; }
+        public int UsedTypeId { get; set; }
         [Required]
-        public string TypeName { get; set; }
+        public string UsedTypeName { get; set; }
     }
 }

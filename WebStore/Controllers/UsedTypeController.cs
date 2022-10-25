@@ -8,16 +8,16 @@ using WebStore.Models;
 
 namespace WebStore.Controllers
 {
-    public class ApplicationTypeController : Controller
+    public class UsedTypeController : Controller
     {
 
         private readonly ApplicationDbContext _db;
 
-        public ApplicationTypeController(ApplicationDbContext db) => _db = db;
+        public UsedTypeController(ApplicationDbContext db) => _db = db;
 
         public IActionResult Index()
         {
-            IEnumerable<ApplicationType> objList = _db.ApplicationType;
+            IEnumerable<UsedType> objList = _db.UsedType;
             return View(objList);
         }
 
@@ -35,11 +35,11 @@ namespace WebStore.Controllers
         [HttpPost]
         //input security check
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ApplicationType obj)
+        public IActionResult Create(UsedType obj)
         {
             if (ModelState.IsValid)
             {
-                _db.ApplicationType.Add(obj);
+                _db.UsedType.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -51,7 +51,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            var obj = _db.ApplicationType.Find(id);
+            var obj = _db.UsedType.Find(id);
             if (obj == null)
                 return NotFound();
 
@@ -60,11 +60,11 @@ namespace WebStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ApplicationType obj)
+        public IActionResult Edit(UsedType obj)
         {
             if (ModelState.IsValid)
             {
-                _db.ApplicationType.Update(obj);
+                _db.UsedType.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -76,7 +76,7 @@ namespace WebStore.Controllers
             if (id == null || id == 0)
                 return NotFound();
 
-            var obj = _db.ApplicationType.Find(id);
+            var obj = _db.UsedType.Find(id);
             if (obj == null)
                 return NotFound();
 
@@ -85,14 +85,14 @@ namespace WebStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(ApplicationType obj)
+        public IActionResult DeletePost(UsedType obj)
         {
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.ApplicationType.Remove(obj);
+            _db.UsedType.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
