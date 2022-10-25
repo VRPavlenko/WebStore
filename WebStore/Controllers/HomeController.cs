@@ -33,6 +33,18 @@ namespace WebStore.Controllers
             return View(homeVM);
         }
 
+        public IActionResult Details(int id)
+        {
+            DetailsVM DetailsVM = new DetailsVM()
+            {
+                Product = _db.Product.Include(unit => unit.Category)
+                .Include(unit => unit.UsedType).Where(unit => unit.Id == id).FirstOrDefault(),
+                ExistInCart = false
+            };
+
+            return View(DetailsVM);
+        }
+
         public IActionResult Privacy()
         {
             return View();
